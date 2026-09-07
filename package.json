@@ -1,0 +1,54 @@
+{
+  "name": "@inite/ideaudit-tools",
+  "version": "1.0.0",
+  "description": "The deterministic scoring tools behind ideaudit, as a local MCP server. No account, no network, no model calls — just the arithmetic, so you can read it and disagree with it.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/bundle.js",
+  "types": "./dist/public.d.ts",
+  "bin": {
+    "ideaudit-tools": "./bin/mcp.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/public.d.ts",
+      "import": "./dist/bundle.js",
+      "default": "./dist/bundle.js"
+    }
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol",
+    "model-context-protocol",
+    "startup",
+    "due-diligence",
+    "scoring",
+    "inite"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "author": "inite LLC",
+  "homepage": "https://inite.studio",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inite-ai/ideaudit-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/inite-ai/ideaudit-mcp/issues"
+  },
+  "mcpName": "studio.inite/ideaudit-tools",
+  "scripts": {
+    "start": "node bin/mcp.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.3.6"
+  }
+}
