@@ -125,6 +125,17 @@ wrong, a number you cannot reproduce, a tool that accepts something it should
 refuse. Bring the input you used — every tool here is deterministic, so a
 disagreement about an answer is always settleable.
 
+## Contribute with an AI agent
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/inite-ai/ideaudit-mcp)
+
+You don't need to be an engineer. Open the repo in your coding agent and say
+`/contribute` (Claude Code) — or "read AGENTS.md and help me report …" in any
+other agent. It runs the tool on your input, finds the constant involved, and
+files an issue a maintainer can settle — an issue, not a pull request, for the
+reason above. [AGENTS.md](AGENTS.md) also explains why `dist/` is committed and
+how `node scripts/verify-dist.mjs` checks it against `src/`.
+
 ## Licence
 
 Apache-2.0. See `LICENSE`.
