@@ -1,0 +1,36 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "studio.inite/ideaudit-tools",
+  "title": "ideaudit",
+  "description": "The scoring behind an audit allowed to say no. Twenty deterministic tools, offline, no account.",
+  "version": "1.1.0",
+  "websiteUrl": "https://inite.studio",
+  "repository": {
+    "url": "https://github.com/inite-ai/ideaudit-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.inite.studio/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer token from https://inite.studio/settings/keys. Optional: with no Authorization header the same endpoint answers on a guest lane \u2014 the twenty deterministic scoring tools, including the verdict, plus `get_started`. Send a token and the tools that need storage or paid data appear alongside them.",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@inite/ideaudit-tools",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

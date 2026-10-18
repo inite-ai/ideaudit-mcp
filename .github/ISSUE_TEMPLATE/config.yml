@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How the tools work (README)
+    url: https://github.com/inite-ai/ideaudit-mcp#readme
+    about: What runs locally, what needs the hosted server, and where the numbers are.
+  - name: ideaudit (hosted product)
+    url: https://inite.studio
+    about: Accounts, saved audits and data tools.
