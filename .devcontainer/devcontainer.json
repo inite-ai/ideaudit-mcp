@@ -1,0 +1,10 @@
+{
+  "name": "ideaudit-mcp",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm",
+  "postCreateCommand": "npm install --no-package-lock --no-audit --no-fund",
+  "customizations": {
+    "vscode": {
+      "extensions": ["github.vscode-github-actions"]
+    }
+  }
+}

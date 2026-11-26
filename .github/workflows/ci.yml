@@ -1,0 +1,57 @@
+name: CI
+
+# This repository is a mirror: src/ cannot be built here (it imports private
+# workspace packages), so dist/bundle.js is committed by the monorepo's sync.
+# What can be checked is that the committed bundle serves what src/ and the
+# manifests say — scripts/verify-dist.mjs — and that the package installs,
+# starts and packs. The build and the vitest suite run upstream before every
+# sync (inite-ai/initeaudit, publish-oss-mirror.yml).
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    name: Gates (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 20 is the `engines` floor and the devcontainer's Node; 22 is current LTS.
+        node: ['20', '22']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ matrix.node }}
+      # No lockfile is committed; the sync would delete one.
+      - run: npm install --no-package-lock --no-audit --no-fund
+      - run: node --check bin/mcp.js
+      - run: node scripts/verify-dist.mjs
+      - name: npm pack carries the bundle and the bin
+        run: |
+          set -euo pipefail
+          npm pack --dry-run --json > pack.json
+          node -e '
+            const files = JSON.parse(require("fs").readFileSync("pack.json", "utf8"))[0].files.map((f) => f.path);
+            for (const want of ["bin/mcp.js", "dist/bundle.js", "dist/public.d.ts"]) {
+              if (!files.includes(want)) { console.error("missing from the tarball: " + want); process.exit(1); }
+            }
+            console.log(files.length + " files in the tarball");
+          '
+
+  devcontainer:
+    name: Devcontainer builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: devcontainers/ci@513af61f4de4f75d37e4438f184ba4358f0fc1ca # v0.3.1900000450
+        with:
+          push: never
+          runCmd: |
+            node scripts/verify-dist.mjs
+            node scripts/call-tool.mjs compute_barrier '{"directCompetitorCount": 3}'

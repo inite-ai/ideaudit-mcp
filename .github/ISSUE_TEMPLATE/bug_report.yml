@@ -1,0 +1,41 @@
+name: Bug report / number I can't reproduce
+description: A tool returns something the README or its description says it shouldn't. Every tool is deterministic, so the exact input settles it.
+title: "bug: "
+labels: [bug]
+body:
+  - type: input
+    id: tool
+    attributes:
+      label: Tool
+      placeholder: e.g. compute_dealbreakers_v2
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: Exact input (arguments JSON)
+      description: Made-up numbers that still reproduce it, please.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output you got
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and why
+      description: If a constant or threshold looks wrong, quote it (from dist/bundle.js or src/specs).
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Local package or hosted server, and version
+      placeholder: "e.g. npx @inite/ideaudit-tools 1.0.0, or api.inite.studio/mcp"
+    validations:
+      required: true
